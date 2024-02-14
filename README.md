@@ -12,7 +12,7 @@ Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fern�
 <summary><b>FANTASIA singularity image</b></summary>
 </br>
 
-  Download the singularity image from [here]().
+  Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia).
 
   Once downloaded, you can execute it as follows (make sure that you have [singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) installed!):
   </br>
