@@ -24,7 +24,7 @@ Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fern�
 <details>
 <summary><b>Local installation and execution</b></summary>
 </br>
-![](Figures/FANTASIA_pipeline.png)
+<img src="Figures/FANTASIA_pipeline.png" />
 </details>
 
 </br>
