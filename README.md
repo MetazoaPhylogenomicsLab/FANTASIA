@@ -4,6 +4,8 @@
 
 FANTASIA (Functional ANnoTAtion based on embedding space SImilArity) is a pipeline for annotating GO terms in protein sequence files using GOPredSim ([to know more](https://github.com/Rostlab/goPredSim)) with the protein language model ProtT5. FANTASIA takes as input a proteome file (either the longest isoform or the full set of isoforms for all genes), removes identical sequences using CD-HIT (ref) and sequences longer than 5000 amino acids (due to a length constraint in the model), and executes GOPredSim-ProtT5 for all sequences. Then, it converts the standard GOPredSim output file to the input file format for topGO (ref) to facilitate its application in a wider biological workflow.
 
+This pipeline results from joined efforts with equal contribution between Ana Roja's lab (Andalusian Center for Developmental Biology, CSIC) and Rosa Fernández's lab (Metazoa Phylogenomics Lab, Institute of Evolutionary Biology, CSIC-UPF) and shows that synergistic collaboration between labs with different expertise can result in great outcomes. We thank LifeHUB-CSIC for being the catalyst of this project and for impulsing us to 'think big'.
+
 ## Cite FANTASIA
 Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life."
 
