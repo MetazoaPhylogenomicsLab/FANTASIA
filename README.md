@@ -9,6 +9,9 @@ This pipeline results from joined efforts with equal contribution between Ana Ro
 ## Cite FANTASIA
 Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life."
 
+## Before using FANTASIA
+To reduce the environmental impact of this pipeline, check if your species of interest has already been functionally annotated using FANTASIA and use that file instead of running it from scratch. A collection of 970 animal and some closely-related outgroups are already calculated and can be found in [MATEdb2](https://github.com/MetazoaPhylogenomicsLab/MATEdb2). 
+
 ## How to use FANTASIA
 <details open>
 <summary><b>FANTASIA singularity image</b></summary>
