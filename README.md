@@ -14,7 +14,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
 
 ## How to use FANTASIA
 <details open>
-<summary><b>FANTASIA singularity image</b></summary>
+<summary><b>FANTASIA singularity image (only CPUs)</b></summary>
 </br>
 
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia).
@@ -31,6 +31,8 @@ To reduce the environmental impact of this pipeline, check if your species of in
   -a/--allisoforms      (Optional) Tab-separated conversion file specifying the correspondance between gene and isoform IDs for obtaining a per-gene annotation using all isoforms.
   -p/--prefix           (Optional) Prefix to add to output folders and files (e.g. the species code). If not provided, input file name will be used.
   ```
+  
+  At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container is prepared to run on CPUs.
   
 </details>
 
