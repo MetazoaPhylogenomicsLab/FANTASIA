@@ -47,7 +47,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
 <summary><b>Local installation and execution</b></summary>
 </br>
 
-  1.- Download the files and scripts from [here](http://gofile.me/5wDJy/GW4ew7RbW).
+  1.- Download the files and scripts from [here](http://gofile.me/5wDJy/CI8zCiijR).
   
   2.- Open ```installation_guide_FANTASIA.sh``` (you can download it from this Github repository) and follow the instructions.
   
