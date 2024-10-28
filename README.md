@@ -22,7 +22,11 @@ To reduce the environmental impact of this pipeline, check if your species of in
 <summary><b>FANTASIA singularity image (only CPUs)</b></summary>
 </br>
 
-  Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia).
+  Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
+
+  ```
+  singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.06f759be1e48bf4f72aed0d4bb4fe2fd6e05774bb58131b131f0128c7b0efc84
+  ```
 
   Once downloaded, you can execute it as follows (make sure that you have [singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) installed!):
   </br>
