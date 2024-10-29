@@ -32,7 +32,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
   </br>
   
   ```
-  Syntax: ./fantasia --infile protein.fasta [--outpath output_path] [--allisoforms gene_isoform_conversion.txt] [--keepintermediate]
+  Syntax: ./fantasia --infile protein.fasta [--outpath output_path] [--allisoforms gene_isoform_conversion.txt]
   options:
   -i/--infile           Input protein fasta file.
   -h/--help             Print this Help.
