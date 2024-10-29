@@ -42,6 +42,8 @@ To reduce the environmental impact of this pipeline, check if your species of in
   ```
   
   At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container is prepared to run on CPUs.
+
+  When using proteomes downloaded from Uniprot, the current implementation will fail due to the presence of special characters in the FASTA headers. Until a new version is released, it is recommended to simplify the headers before running FANTASIA.
   
 </details>
 
