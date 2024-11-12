@@ -27,7 +27,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
   ```
   singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.64ff77ac69b4a1474fc8e1eec99184a37a74fdbf564604a9004ef39130174822
   ```
-  The definition file used to create the image is also available on this GitHub repository. The files and scripts needed are the same as those required for local installation (download link below).
+  The definition file used to create the image is also available on this GitHub repository (```FANTASIA.def```). The files and scripts needed are the same as those required for local installation (download link below).
 
   Once downloaded, you can execute it as follows (make sure that you have [singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) installed!):
   </br>
