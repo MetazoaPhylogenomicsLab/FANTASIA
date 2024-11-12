@@ -1,0 +1,228 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.1.2-0
+#To build: sudo singularity build fantasia FANTASIA.def
+
+%files
+    FANTASIA/* /FANTASIA/
+    requirements.txt
+    requirements_bio_emb.txt
+    requirements_gopredsim.txt
+    tf_conda_env_spec.txt
+
+%environment
+    export PATH=/opt/conda/envs/gopredsim/bin:$PATH
+    #conda init bash
+    . activate gopredsim
+
+%post
+    #Conda environments
+    conda create --name gopredsim --file tf_conda_env_spec.txt python=3.9.13
+    #echo ". activate gopredsim" >> ~/.bashrc 
+    #conda init bash
+    . activate gopredsim
+    conda -V
+    python -V
+    conda list
+    conda search "^python$"
+    conda install python=3.9.13
+    conda config --set solver classic
+    python -V
+    #conda install -c conda-forge gensim==3.8.3
+    conda install -c conda-forge gcc
+    conda install -c conda-forge gxx
+    conda install -c conda-forge zlib
+    conda install -c anaconda make
+    conda install -c bioconda seqtk
+    #Python environment for prott5
+    /opt/conda/envs/gopredsim/bin/python --version
+    /opt/conda/envs/gopredsim/bin/python -m ensurepip --default-pip
+    /opt/conda/envs/gopredsim/bin/python -m venv venv
+    #echo ". venv/bin/activate" >> $SINGULARITY_ENVIRONMENT
+    . venv/bin/activate
+    /opt/conda/envs/gopredsim/bin/python -m pip install Cmake
+    /opt/conda/envs/gopredsim/bin/python -m pip install wheel
+    /opt/conda/envs/gopredsim/bin/python -m pip install gensim==3.8.0
+    /opt/conda/envs/gopredsim/bin/python -m pip install -r requirements.txt #--ignore-installed
+    /opt/conda/envs/gopredsim/bin/python -m pip install numba
+    #echo "deactivate" >> $SINGULARITY_ENVIRONMENT
+    deactivate
+    conda clean --all
+    /opt/conda/envs/gopredsim/bin/python -m pip cache purge
+
+%runscript
+    ############################################################
+    # Help                                                     #
+    ############################################################
+    Help()
+    {
+       # Display Help
+       echo "FANTASIA (Functional ANnoTAtion based on embedding space SImilArity) allows the user to functionally annotate a given protein FASTA file."
+       echo ""
+       echo "Citation: Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life."
+       echo
+       echo "Syntax: ./fantasia --infile protein.fasta [--outpath output_path] [--allisoforms gene_isoform_conversion.txt]"
+       echo "options:"
+       echo "-i/--infile           Input protein fasta file."
+       echo "-h/--help             Print this Help."
+       echo "-o/--outpath          (Optional) Output directory. If not provided, input file directory will be used."
+       echo "-a/--allisoforms      (Optional) Tab-separated conversion file specifying the correspondance between gene and isoform IDs for obtaining a per-gene annotation using all isoforms."
+       echo "-p/--prefix           (Optional) Prefix to add to output folders and files (e.g. the species code). If not provided, input file name will be used."
+       echo
+    }
+
+    ############################################################
+    ############################################################
+    # Extra functions (print error message)                    #
+    ############################################################
+    ############################################################
+    die() { echo "$*" 1>&2 ; exit 1; }
+
+    ############################################################
+    ############################################################
+    # Main program                                             #
+    ############################################################
+    ############################################################
+    #Check argument options.
+    while :; do
+        case $1 in
+            -i|--infile)
+                #Check if an input file has been given.
+                if [ -n "$2" ]; then
+                    INFILE=$2
+                    shift
+                else
+                    die 'ERROR: "--infile" requires a non-empty option argument.'
+                fi
+            ;;
+            -p|--prefix)
+                #Check that a prefix has been given
+                if [ -n "$2" ]; then
+                    PREFIX=$2
+                    shift
+                else
+                    die 'ERROR: "--prefix" requires a non-empty option argument.'
+                fi
+            ;;
+            -a|--allisoforms)
+                #Check if a conversion file has been given.
+                if [ -n "$2" ]; then
+                    ISOFILE=$2
+                    shift
+                else
+                    die 'ERROR: "--allisoforms" requires a non-empty option argument.'
+                fi
+            ;;
+            -o|--outpath)
+                #Check if an output path has been given.
+                if [ -n "$2" ]; then
+                    OUTPUT_PATH=$2
+                    shift
+                else
+                    die 'ERROR: "--outpath" requires a non-empty option argument.'
+                fi
+            ;;
+            -h|--help)
+                #Print help.
+                Help
+                exit
+            ;;
+            *) break
+        esac
+        shift
+    done
+
+    # Check if a valid input file has been provided.
+    if [ -z "$INFILE" ]; then
+        die "ERROR: '--infile' requires a non-empty option argument."
+    else
+        if [ "$(head -n 1 "$INFILE")" != ">"* ] && [ "$(sed -n 2p "$INFILE" | grep -vE '^[ACDEFGHIKLMNPQRSTVWY]+$')" ]; then
+            die "ERROR: Input file is not a protein FASTA file."
+        fi
+    fi
+
+    # If no prefix has been given, use the input file name.
+    if [ -z "$PREFIX" ]; then
+        PREFIX="${INFILE##*/}" # If full path has been given, keep only file name
+        PREFIX="${PREFIX%.*}" # Remove extension from file name
+    fi
+
+    # If no output path has been given, use the input file directory.
+    if [ -z "$OUTPUT_PATH" ]; then
+        OUTPUT_PATH=$(realpath "$INFILE")
+        OUTPUT_PATH="${OUTPUT_PATH%/*}"
+    else
+        OUTPUT_PATH=$(realpath "$OUTPUT_PATH")
+    fi
+
+    #If providing all isoforms, check that the conversion file is valid
+    #Check format. Tab separated columns.
+    if [ -n "$ISOFILE" ]; then
+        if [ $(awk -F'\t' 'BEGIN {OFS = FS}; {print NF}' "$ISOFILE" | sort -nu | tail -n 1) -ne 2 ]; then
+            die 'ERROR: Isoform conversion file is not in the correct format. It must have two tab-separated columns.'
+        else #Check if conversion file has isoforms
+            if [ $(cut -f1 "$ISOFILE"| sort | uniq | wc -l) -eq $(cut -f2 "$ISOFILE" | sort | uniq | wc -l) ]; then
+                die 'ERROR: Isoform conversion file contains one isoform per gene. Please, check the isoform conversion file contents or execute FANTASIA again without --allisoforms.'
+            else #Detect automatically if first or second column contains gene names
+                if [ $(cut -f1 "$ISOFILE"| sort | uniq | wc -l) -lt $(cut -f2 "$ISOFILE" | sort | uniq | wc -l) ]; then
+                    GENE_COL=1
+                    ISO_COL=2
+                else
+                    GENE_COL=2
+                    ISO_COL=1
+                fi
+                grep ">" $INFILE | tr -d ">" > isoform_temp.txt
+                if [ -z "$(grep -wf isoform_temp.txt "$ISOFILE")" ] || [ $(grep -wf isoform_temp.txt "$ISOFILE" | wc -l) -ne $(wc -l isoform_temp.txt | cut -f1 -d" ") ]; then #Check that all input file sequences are included in the isoform conversion file. Can be misleading if the name of one sequence is included inside the name of another one
+                    rm isoform_temp.txt
+                    die 'ERROR: 'Conversion file does not contain all sequences from input file or names don't match. Please, check the isoform conversion and input file contents or execute FANTASIA again without --allisoforms.'
+                fi
+            fi
+        fi
+    fi
+
+
+    ############################################################
+    # Executing FANTASIA pipeline                              #
+    ############################################################
+    echo ""
+    echo ""
+    echo " ######   ##   #    # #####   ##    ####  #   ##   "
+    echo " #       #  #  ##   #   #    #  #  #      #  #  #  "
+    echo " #####  #    # # #  #   #   #    #  ####  # #    # "
+    echo " #      ###### #  # #   #   ######      # # ###### "
+    echo " #      #    # #   ##   #   #    # #    # # #    # "
+    echo " #      #    # #    #   #   #    #  ####  # #    # "
+    echo "                                                   "
+    echo ""
+    echo "FANTASIA (Functional ANnoTAtion based on embedding space SImilArity)"
+    echo ""
+    echo "Generating input and configuration files..."
+    /bin/bash /FANTASIA/generate_gopredsim_input_files.sh -i $INFILE -o $OUTPUT_PATH -p -x $PREFIX -c $OUTPUT_PATH --mode CPU
+    echo "Input files can be found in $(realpath $INFILE | sed -E 's|/[^/]+$|/|')"
+    echo "Configuration files can be found in $OUTPUT_PATH/config_files/"
+    NUM_SEQS=$(grep -c ">" $INFILE)
+    MEM_USE=$(python -c "import os; print(4.4 + 0.0021 * $NUM_SEQS)")
+    echo "Initiating GO annotation prediction using ProtT5 model. Estimated memory usage of $MEM_USE G"
+    /bin/bash /FANTASIA/launch_gopredsim_pipeline.sh -c $OUTPUT_PATH -x $PREFIX -m prott5 -o $OUTPUT_PATH
+    echo "GO annotation done"
+    INFILE="${INFILE##*/}"
+    if [ -n "$ISOFILE" ];then
+        echo "Collapsing isoform GO annotation to genes and formatting to topGO-compatible format"
+        python /FANTASIA/collapse_gos_isoforms.py -c $ISOFILE -g $GENE_COL -i $ISO_COL -a $OUTPUT_PATH/${PREFIX}_prott5 -p $PREFIX -o $OUTPUT_PATH/${INFILE%.*}_topgo.txt
+        echo "Done"
+    else
+        echo "Formatting GO annotation to topGO-compatible format"
+        python /FANTASIA/convert_topgo_format.py -a $OUTPUT_PATH/${PREFIX}_prott5 -p $PREFIX -o $OUTPUT_PATH/${INFILE%.*}_topgo.txt
+        echo "Done"
+    fi
+    echo "Full results can be found in $OUTPUT_PATH/${PREFIX}_prott5"
+    echo "Final GO annotation can be found in $OUTPUT_PATH/${INFILE%.*}_topgo.txt"
+    echo ""
+    echo "If you use FANTASIA, please cite us: Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life."
+    echo ""
+
+%labels
+    Author Gemma I. Martinez-Redondo (gimartinezredondo@gmail.com)
+    Version v1.0
+
+%help
+    FANTASIA (Functional ANnoTAtion based on embedding space SImilArity) allows the user to functionally annotate a given protein FASTA file. More details about the pipeline can be found on GitHub (https://github.com/MetazoaPhylogenomicsLab/FANTASIA).
