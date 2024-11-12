@@ -25,8 +25,9 @@ To reduce the environmental impact of this pipeline, check if your species of in
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
 
   ```
-  singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.06f759be1e48bf4f72aed0d4bb4fe2fd6e05774bb58131b131f0128c7b0efc84
+  singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.64ff77ac69b4a1474fc8e1eec99184a37a74fdbf564604a9004ef39130174822
   ```
+  The definition file used to create the image is also available on this GitHub repository. The files and scripts needed are the same as those required for local installation (download link below).
 
   Once downloaded, you can execute it as follows (make sure that you have [singularity](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) installed!):
   </br>
@@ -42,8 +43,6 @@ To reduce the environmental impact of this pipeline, check if your species of in
   ```
   
   At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container is prepared to run on CPUs.
-
-  When using proteomes downloaded from Uniprot, the current implementation will fail due to the presence of special characters in the FASTA headers. Until a new version is released, it is recommended to simplify the headers before running FANTASIA.
   
 </details>
 
