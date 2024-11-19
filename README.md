@@ -19,13 +19,13 @@ To reduce the environmental impact of this pipeline, check if your species of in
 
 ## How to use FANTASIA
 <details open>
-<summary><b>FANTASIA singularity image (only CPUs)</b></summary>
+<summary><b>FANTASIA singularity image (default CPUs)</b></summary>
 </br>
 
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
 
   ```
-  singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.64ff77ac69b4a1474fc8e1eec99184a37a74fdbf564604a9004ef39130174822
+  singularity pull --arch amd64 library://gemma.martinezredondo/fantasia/fantasia:sha256.299ed9bb0947d19d58068f1ecef0128b147bbce73f762570b8ba44141d7b5fe6
   ```
   The definition file used to create the image is also available on this GitHub repository (```FANTASIA.def```). The files and scripts needed are the same as those required for local installation (download link below).
 
@@ -40,6 +40,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
   -o/--outpath          (Optional) Output directory. If not provided, input file directory will be used.
   -a/--allisoforms      (Optional) Tab-separated conversion file specifying the correspondance between gene and isoform IDs for obtaining a per-gene annotation using all isoforms.
   -p/--prefix           (Optional) Prefix to add to output folders and files (e.g. the species code). If not provided, input file name will be used.
+  -g/--gpu              (Optional) Use GPUs instead of CPUs. If not provided, CPUs are used by default.
   ```
   
   At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container is prepared to run on CPUs.
