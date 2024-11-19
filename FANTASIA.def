@@ -67,6 +67,7 @@ From: continuumio/miniconda3:24.1.2-0
        echo "-o/--outpath          (Optional) Output directory. If not provided, input file directory will be used."
        echo "-a/--allisoforms      (Optional) Tab-separated conversion file specifying the correspondance between gene and isoform IDs for obtaining a per-gene annotation using all isoforms."
        echo "-p/--prefix           (Optional) Prefix to add to output folders and files (e.g. the species code). If not provided, input file name will be used."
+       echo "-g/--gpu              (Optional) Use GPUs instead of CPUs. If not provided, CPUs are used by default."
        echo
     }
 
@@ -121,6 +122,10 @@ From: continuumio/miniconda3:24.1.2-0
                     die 'ERROR: "--outpath" requires a non-empty option argument.'
                 fi
             ;;
+            -g|--gpu)
+                #Change mode to GPU
+                MODE=GPU
+            ;;
             -h|--help)
                 #Print help.
                 Help
@@ -135,8 +140,11 @@ From: continuumio/miniconda3:24.1.2-0
     if [ -z "$INFILE" ]; then
         die "ERROR: '--infile' requires a non-empty option argument."
     else
-        if [ "$(head -n 1 "$INFILE")" != ">"* ] && [ "$(sed -n 2p "$INFILE" | grep -vE '^[ACDEFGHIKLMNPQRSTVWY]+$')" ]; then
-            die "ERROR: Input file is not a protein FASTA file."
+        if [ "$(head -n 1 "$INFILE")" != ">"* ] && [ "$(sed -n 2p "$INFILE" | grep -vE '^[ACDEFGHIKLMNPQRSTVWXY]+$')" ]; then
+            die "ERROR: Input file is not a valid protein FASTA file or contains not valid sequence characters."
+        fi
+        if [ "$(grep -c '*' "$INFILE")" -gt "$(grep -c '>' "$INFILE")" ]; then
+            echo "WARNING: Input file contains stop codons (*) in the middle of 1 or more sequences. These will be removed from the sequences and might affect the results obtained."
         fi
     fi
 
@@ -179,6 +187,11 @@ From: continuumio/miniconda3:24.1.2-0
         fi
     fi
 
+    #If GPU is not selected, use default CPU execution mode
+    if [ -z "$MODE" ]; then
+        MODE=CPU
+    fi
+
 
     ############################################################
     # Executing FANTASIA pipeline                              #
@@ -196,11 +209,11 @@ From: continuumio/miniconda3:24.1.2-0
     echo "FANTASIA (Functional ANnoTAtion based on embedding space SImilArity)"
     echo ""
     echo "Generating input and configuration files..."
-    /bin/bash /FANTASIA/generate_gopredsim_input_files.sh -i $INFILE -o $OUTPUT_PATH -p -x $PREFIX -c $OUTPUT_PATH --mode CPU
+    /bin/bash /FANTASIA/generate_gopredsim_input_files.sh -i $INFILE -o $OUTPUT_PATH -p -x $PREFIX -c $OUTPUT_PATH --mode $MODE
     echo "Input files can be found in $(realpath $INFILE | sed -E 's|/[^/]+$|/|')"
     echo "Configuration files can be found in $OUTPUT_PATH/config_files/"
     NUM_SEQS=$(grep -c ">" $INFILE)
-    MEM_USE=$(python -c "import os; print(4.4 + 0.0021 * $NUM_SEQS)")
+    MEM_USE=$(python -c "import os; print(14.4 + 0.0021 * $NUM_SEQS)")
     echo "Initiating GO annotation prediction using ProtT5 model. Estimated memory usage of $MEM_USE G"
     /bin/bash /FANTASIA/launch_gopredsim_pipeline.sh -c $OUTPUT_PATH -x $PREFIX -m prott5 -o $OUTPUT_PATH
     echo "GO annotation done"
@@ -214,8 +227,8 @@ From: continuumio/miniconda3:24.1.2-0
         python /FANTASIA/convert_topgo_format.py -a $OUTPUT_PATH/${PREFIX}_prott5 -p $PREFIX -o $OUTPUT_PATH/${INFILE%.*}_topgo.txt
         echo "Done"
     fi
-    echo "Full results can be found in $OUTPUT_PATH/${PREFIX}_prott5"
-    echo "Final GO annotation can be found in $OUTPUT_PATH/${INFILE%.*}_topgo.txt"
+    echo "Full results (including information on reliability) can be found in $OUTPUT_PATH/${PREFIX}_prott5"
+    echo "Final GO annotation (unfiltered) can be found in $OUTPUT_PATH/${INFILE%.*}_topgo.txt"
     echo ""
     echo "If you use FANTASIA, please cite us: Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life."
     echo ""
