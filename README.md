@@ -43,7 +43,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
   -g/--gpu              (Optional) Use GPUs instead of CPUs. If not provided, CPUs are used by default.
   ```
   
-  At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container is prepared to run on CPUs.
+  At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container for the default CPU mode.
   
 </details>
 
