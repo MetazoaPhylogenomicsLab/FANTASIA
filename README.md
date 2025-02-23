@@ -6,20 +6,32 @@ FANTASIA (Functional ANnoTAtion based on embedding space SImilArity) is a pipeli
 
 This pipeline results from joined efforts with equal contribution between Ana Roja's lab (Andalusian Center for Developmental Biology, CSIC) and Rosa Fernández's lab (Metazoa Phylogenomics Lab, Institute of Evolutionary Biology, CSIC-UPF) and shows that synergistic collaboration between labs with different expertise can result in great outcomes. We thank LifeHUB-CSIC for being the catalyst of this project and for impulsing us to 'think big'.
 
+<img src="Figures/FANTASIA_pipeline.png" />
+
 ## Cite FANTASIA
 Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life. [https://doi.org/10.1101/2024.02.28.582465](https://doi.org/10.1101/2024.02.28.582465)."
 
-For our work about the performance of the different methods in model organisms check: Barrios-Núñez, I., Martínez-Redondo, G. I., Medina-Burgos, P., Cases, I., Fernández, R. & Rojas, A.M. (2024). Decoding proteome functional information in model organisms using protein language models. [https://doi.org/10.1101/2024.02.14.580341](https://doi.org/10.1101/2024.02.14.580341)
+For our work about the performance of the different methods in model organisms check: Barrios-Núñez, I., Martínez-Redondo, G. I., Medina-Burgos, P., Cases, I., Fernández, R. & Rojas, A.M. (2024). Decoding functional proteome information in model organisms using protein language models, *NAR Genomics and Bioinformatics* (6), 3, lqae078, [https://doi.org/10.1093/nargab/lqae078](https://doi.org/10.1093/nargab/lqae078)
 
 
 **Contact information**: Gemma I. Martínez-Redondo ([gemma.martinez@ibe.upf-csic.es](mailto:gemma.martinez@ibe.upf-csic.es)), Ana M. Rojas ([a.rojas.m@csic.es](mailto:a.rojas.m@csic.es)), Rosa Fernández ([rosa.fernandez@ibe.upf-csic.es](mailto:rosa.fernandez@ibe.upf-csic.es)).
 
 ## Before using FANTASIA
-To reduce the environmental impact of this pipeline, check if your species of interest has already been functionally annotated using FANTASIA and use that file instead of running it from scratch. A collection of 970 animal and some closely-related outgroups are already calculated and can be found in [MATEdb2](https://github.com/MetazoaPhylogenomicsLab/MATEdb2). 
+To reduce the environmental impact of this pipeline, check if your species of interest has already been functionally annotated using FANTASIA and use that file instead of running it from scratch. A collection of 970 animals and some closely-related outgroups are already calculated and can be found in [MATEdb2](https://github.com/MetazoaPhylogenomicsLab/MATEdb2). 
 
 ## How to use FANTASIA
-<details open>
-<summary><b>FANTASIA singularity image (default CPUs)</b></summary>
+<details>
+<summary><b>Latest FANTASIA implementation</b></summary>
+</br>
+  
+  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version that can be found here: [Latest FANTASIA implementation](https://github.com/CBBIO/FANTASIA)
+  
+</details>
+
+</br>
+
+<details>
+<summary><b>Legacy FANTASIA implementation in singularity image (default CPUs)</b></summary>
 </br>
 
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
@@ -44,28 +56,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
   ```
   
   At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container for the default CPU mode.
-  
+
 </details>
 
 </br>
-
-<details>
-<summary><b>Local installation and execution</b></summary>
-</br>
-
-  1.- Download the files and scripts from [here](http://gofile.me/5wDJy/CI8zCiijR).
-  
-  2.- Open ```installation_guide_FANTASIA.sh``` (you can download it from this Github repository) and follow the instructions.
-  
-  3.- Execute FANTASIA (you can check the files and options required for each script by adding ```-h```).
-
-<img src="Figures/FANTASIA_pipeline.png" />
-</details>
-
-</br>
-
-<details open>
-<summary><b>Galaxy implementation</b></summary>
-</br>
-Work in progress...
-</details>
