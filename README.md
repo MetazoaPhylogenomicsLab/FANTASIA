@@ -20,22 +20,14 @@ For our work about the performance of the different methods in model organisms c
 To reduce the environmental impact of this pipeline, check if your species of interest has already been functionally annotated using FANTASIA and use that file instead of running it from scratch. A collection of 970 animals and some closely-related outgroups are already calculated and can be found in [MATEdb2](https://github.com/MetazoaPhylogenomicsLab/MATEdb2). 
 
 ## How to use FANTASIA
-<details open>
-<summary><b>Latest FANTASIA implementation</b></summary>
-</br>
-  
-  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version that can be found here:
-  
-  [!IMPORTANT]
-  [https://github.com/CBBIO/FANTASIA](https://github.com/CBBIO/FANTASIA)
-  
-</details>
+### <b>Latest FANTASIA implementation</b>
 
-</br>
+  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version. 
 
-<details open>
-<summary><b>Legacy FANTASIA implementation in singularity image (default CPUs)</b></summary>
-</br>
+> [!IMPORTANT]
+> For the latest FANTASIA version, visit [https://github.com/CBBIO/FANTASIA](https://github.com/CBBIO/FANTASIA)
+
+### <b>Legacy FANTASIA implementation in singularity image (default CPUs)</b>
 
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
 
@@ -59,7 +51,3 @@ To reduce the environmental impact of this pipeline, check if your species of in
   ```
   
   At a given point, FANTASIA may raise a warning if your system only has CPUs or the GPU CUDA library version is different than 11.0. You can safely ignore this message as the singularity container for the default CPU mode.
-
-</details>
-
-</br>
