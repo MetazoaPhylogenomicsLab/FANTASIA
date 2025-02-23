@@ -20,7 +20,7 @@ For our work about the performance of the different methods in model organisms c
 To reduce the environmental impact of this pipeline, check if your species of interest has already been functionally annotated using FANTASIA and use that file instead of running it from scratch. A collection of 970 animals and some closely-related outgroups are already calculated and can be found in [MATEdb2](https://github.com/MetazoaPhylogenomicsLab/MATEdb2). 
 
 ## How to use FANTASIA
-<details>
+<details open>
 <summary><b>Latest FANTASIA implementation</b></summary>
 </br>
   
@@ -30,7 +30,7 @@ To reduce the environmental impact of this pipeline, check if your species of in
 
 </br>
 
-<details>
+<details open>
 <summary><b>Legacy FANTASIA implementation in singularity image (default CPUs)</b></summary>
 </br>
 
