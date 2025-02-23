@@ -24,7 +24,10 @@ To reduce the environmental impact of this pipeline, check if your species of in
 <summary><b>Latest FANTASIA implementation</b></summary>
 </br>
   
-  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version that can be found here: [Latest FANTASIA implementation](https://github.com/CBBIO/FANTASIA)
+  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version that can be found here:
+  
+  [!IMPORTANT]
+  [https://github.com/CBBIO/FANTASIA](https://github.com/CBBIO/FANTASIA)
   
 </details>
 
