@@ -22,12 +22,9 @@ To reduce the environmental impact of this pipeline, check if your species of in
 ## How to use FANTASIA
 ### <b>Latest FANTASIA implementation</b>
 
-  The current GitHub repository contains the original FANTASIA implementation which suffered from several dependency conflicts in some computers. For that, we developed a new expanded, and more stable version. 
+  The current GitHub repository contains the FANTASIA (v1) implementation which can generate dependency conflicts in some computers. For this reason, we have developed a new more stable version that can be found here: [https://github.com/CBBIO/FANTASIA](https://github.com/CBBIO/FANTASIA). Both versions differ in their implementation, performance, and reference dataset. Check the paper () for the complete list of differences.
 
-> [!IMPORTANT]
-> For the latest FANTASIA version, visit [https://github.com/CBBIO/FANTASIA](https://github.com/CBBIO/FANTASIA)
-
-### <b>Legacy FANTASIA implementation in singularity image (default CPUs)</b>
+### <b>FANTASIA (v1) implementation in singularity image (default CPUs)</b>
 
   Download the singularity image from [here](https://cloud.sylabs.io/library/gemma.martinezredondo/fantasia/fantasia) by executing:
 
