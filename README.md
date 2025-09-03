@@ -9,7 +9,21 @@ This pipeline results from joined efforts with equal contribution between Ana Ro
 <img src="Figures/FANTASIA_pipeline.png" />
 
 ## Cite FANTASIA
-Martínez-Redondo, G. I., Barrios, I., Vázquez-Valls, M., Rojas, A. M., & Fernández, R. (2024). Illuminating the functional landscape of the dark proteome across the Animal Tree of Life. [https://doi.org/10.1101/2024.02.28.582465](https://doi.org/10.1101/2024.02.28.582465)."
+Martínez-Redondo, G.I., Perez-Canales, F.M., Carbonetto, B. et al. FANTASIA leverages language models to decode the functional dark proteome across the animal tree of life. Commun Biol 8, 1227 (2025). [https://doi.org/10.1038/s42003-025-08651-2[(https://doi.org/10.1038/s42003-025-08651-2)."
+
+```bibtex
+@article{Martínez-Redondo2025,
+  author  = {Martínez-Redondo, Gemma I. and Perez-Canales, Francisco M. and Carbonetto, Belén and Fernández, José M. and Barrios-Núñez, Israel and Vázquez-Valls, Marçal and Cases, Ildefonso and Rojas, Ana M. and Fernández, Rosa},
+  title   = {FANTASIA leverages language models to decode the functional dark proteome across the animal tree of life},
+  journal = {Communications Biology},
+  volume  = {8},
+  number  = {1},
+  pages   = {1227},
+  year    = {2025},
+  doi     = {10.1038/s42003-025-08651-2},
+  url     = {https://doi.org/10.1038/s42003-025-08651-2}
+}
+```
 
 For our work about the performance of the different methods in model organisms check: Barrios-Núñez, I., Martínez-Redondo, G. I., Medina-Burgos, P., Cases, I., Fernández, R. & Rojas, A.M. (2024). Decoding functional proteome information in model organisms using protein language models, *NAR Genomics and Bioinformatics* (6), 3, lqae078, [https://doi.org/10.1093/nargab/lqae078](https://doi.org/10.1093/nargab/lqae078)
 
